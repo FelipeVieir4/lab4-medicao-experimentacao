@@ -20,9 +20,12 @@ Todos os resultados usam semente fixa (`numpy.random.default_rng(42)`), então s
 
 ## Estrutura
 
-- `app.py`: dashboard Streamlit
+- `app.py`: dashboard Streamlit (monta as seções 1 a 7)
 - `data/prs_merge_time.csv`: dados reais (30 PRs por grupo)
 - `src/params.py`: estima os parâmetros da simulação a partir dos dados reais
-- `src/simulate.py`: geração dos dados simulados
+- `src/simulate.py`: geração do conjunto simulado de exemplo
+- `src/scenarios.py`: situações simuladas (base, muito assimétrica, outliers, amostra pequena)
 - `src/tests.py`: t de Welch e Mann-Whitney
-- `src/plot_g1.py`, `src/plot_g2.py`: gráficos G1 e G2
+- `src/q1_type1.py`, `src/q2_power.py`: erro tipo I (Q1) e poder (Q2/Q3), 10.000 repetições
+- `src/plot_g1.py` a `src/plot_g4.py`: gráficos G1 a G4
+- `src/sec_*.py`: seções 4 a 7 do dashboard
