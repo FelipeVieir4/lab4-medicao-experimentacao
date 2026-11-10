@@ -104,3 +104,16 @@ st.markdown(
 )
 st.caption("Nota: as barras do Welch ficam mais assimétricas que a curva t porque os dados são lognormais. "
            "É exatamente essa discrepância que as próximas etapas (erro tipo I e poder) vão medir.")
+
+# 4. Erro tipo I (G3) – src/sec_tipo1.py
+try:
+    from src.sec_tipo1 import render as render_tipo1
+except ModuleNotFoundError:
+    render_tipo1 = None
+if render_tipo1:
+    render_tipo1()
+
+# 5. Poder (G4)
+from src.sec_poder import render as render_poder
+
+render_poder()

@@ -22,6 +22,13 @@ def welch_t_batch(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     return (a.mean(axis=1) - b.mean(axis=1)) / np.sqrt(va / a.shape[1] + vb / b.shape[1])
 
 
+def pvalues_batch(a: np.ndarray, b: np.ndarray):
+    """p-valores bicaudais (Welch, Mann-Whitney) para cada linha de a e b (matrizes reps x n)."""
+    p_welch = stats.ttest_ind(a, b, axis=1, equal_var=False).pvalue
+    p_mw = 2 * stats.norm.sf(np.abs(mw_z(a, b)))
+    return p_welch, p_mw
+
+
 def mw_z_batch(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     return mw_z(a, b)
 
