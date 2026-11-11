@@ -4,7 +4,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from scipy import stats
 
-CORES_TESTE = {"t de Welch": "#1f77b4", "Mann-Whitney": "#ff7f0e"}
+from src.theme import ALTURA, CORES_TESTE, TEXTO, VERMELHO
+
 ALFA = 0.05
 
 
@@ -37,16 +38,16 @@ def fig_g2(t_null, z_null, welch_res, mw_res, alfa=ALFA):
         cauda = xs[xs <= -abs(obs)], xs[xs >= abs(obs)]
         for k, seg in enumerate(cauda):
             if len(seg):
-                _area(fig, seg, dist.pdf(seg), "#000000", f"p-valor do exemplo", 1, col, 0.5, show=(col == 1 and k == 0))
+                _area(fig, seg, dist.pdf(seg), TEXTO, f"p-valor do exemplo", 1, col, 0.5, show=(col == 1 and k == 0))
         esq, dir_ = xs[xs <= -crit], xs[xs >= crit]
-        _area(fig, esq, dist.pdf(esq), "#d62728", f"Região de rejeição (α = {alfa:.2f})", 1, col, 0.7, show=(col == 1), largura=2)
-        _area(fig, dir_, dist.pdf(dir_), "#d62728", f"Região de rejeição (α = {alfa:.2f})", 1, col, 0.7, show=False, largura=2)
-        fig.add_vline(x=obs, line=dict(color="black", dash="dash"), row=1, col=col)
+        _area(fig, esq, dist.pdf(esq), VERMELHO, f"Região de rejeição (α = {alfa:.2f})", 1, col, 0.7, show=(col == 1), largura=2)
+        _area(fig, dir_, dist.pdf(dir_), VERMELHO, f"Região de rejeição (α = {alfa:.2f})", 1, col, 0.7, show=False, largura=2)
+        fig.add_vline(x=obs, line=dict(color=TEXTO, dash="dash", width=1.5), row=1, col=col)
         fig.add_annotation(x=obs + (0.2 if obs > 0 else -0.2), y=0.33, xref=f"x{col}" if col > 1 else "x", yref=f"y{col}" if col > 1 else "y",
                            text=f"obs = {obs:.2f}<br>p = {res['p_valor']:.3f}", showarrow=False,
                            xanchor="left" if obs > 0 else "right")
         fig.update_xaxes(title_text="Valor da estatística (adimensional)", range=[-6, 6], row=1, col=col)
     fig.update_yaxes(title_text="Densidade", col=1)
     fig.update_layout(title="G2 – Estatística do teste sob H0, região de rejeição e p-valor do exemplo",
-                      height=480, bargap=0.02, legend=dict(orientation="h", y=-0.3))
+                      height=ALTURA, bargap=0.02, legend=dict(y=-0.2))
     return fig

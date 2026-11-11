@@ -2,8 +2,10 @@
 import numpy as np
 import streamlit as st
 
+from src import ui
 from src.params import load_real
 from src.real_analysis import ALFA, analisar
+from src.theme import CORES_GRUPO
 
 
 def _magnitude_r(r: float) -> str:
@@ -27,20 +29,34 @@ def _dados():
 
 def render():
     res, med_com, med_sem, n = _dados()
-    st.header("6. Dados reais")
     tabela = res.rename(columns={
         "teste": "Teste", "estatistica": "Estatística (t ou z)", "p_valor": "p-valor",
         "tamanho_efeito": "Tamanho do efeito (d de Cohen / r bisserial)", "conclusao": "Conclusão",
     })
-    st.dataframe(
-        tabela.style.format({"Estatística (t ou z)": "{:.2f}", "p-valor": "{:.4f}",
-                             "Tamanho do efeito (d de Cohen / r bisserial)": "{:.2f}"}),
-        hide_index=True, width="stretch",
-    )
-
     w = res.set_index("teste").loc["t de Welch"]
     m = res.set_index("teste").loc["Mann-Whitney"]
     mesma = (w["p_valor"] < ALFA) == (m["p_valor"] < ALFA)
+
+    with ui.card("reais"):
+        st.header("6. Dados reais")
+        tab, txt = ui.colunas()
+        with tab:
+            ui.kicker(f"Resultado dos dois testes ({n['com_bot']} PRs com bot × {n['sem_bot']} sem bot)")
+            ui.duelo(f"p = {ui.br(w['p_valor'], 3)}", f"p = {ui.br(m['p_valor'], 4)}",
+                     f"d de Cohen = {ui.br(w['tamanho_efeito'], 2)} · {w['conclusao']}",
+                     f"r bisserial = {ui.br(m['tamanho_efeito'], 2)} · {m['conclusao']}")
+            st.dataframe(
+                tabela.style.format({"Estatística (t ou z)": "{:.2f}", "p-valor": "{:.4f}",
+                                     "Tamanho do efeito (d de Cohen / r bisserial)": "{:.2f}"}),
+                hide_index=True, width="stretch",
+            )
+            ui.tiles([("Mediana sem bot", CORES_GRUPO["sem_bot"], f"{ui.br(med_sem)} h", "tempo até o merge"),
+                      ("Mediana com bot", CORES_GRUPO["com_bot"], f"{ui.br(med_com)} h", "tempo até o merge")])
+        with txt:
+            _texto(w, m, n, mesma, med_com, med_sem)
+
+
+def _texto(w, m, n, mesma, med_com, med_sem):
     st.markdown(
         f"Com os {n['com_bot']} PRs com bot e {n['sem_bot']} sem bot, o **t de Welch** deu t = {w['estatistica']:.2f}, "
         f"p = {w['p_valor']:.3f} e d de Cohen = {w['tamanho_efeito']:.2f} (efeito {_magnitude_d(w['tamanho_efeito'])}), e "

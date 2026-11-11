@@ -1,6 +1,7 @@
 """Seção 4 do dashboard: Erro tipo I (G3)."""
 import streamlit as st
 
+from src import ui
 from src.plot_g3 import fig_g3
 from src.q1_type1 import ALFA, REPS, run_type1
 from src.scenarios import CENARIOS
@@ -15,8 +16,6 @@ def _dados():
 
 def render():
     df = _dados()
-    st.header("4. Erro tipo I")
-    st.plotly_chart(fig_g3(df, ALFA), width="stretch")
 
     def faixa(teste):
         s = df[df["teste"] == teste].set_index("cenario")["erro_tipo1"]
@@ -31,7 +30,7 @@ def render():
     w_longe = int((longe["teste"] == "t de Welch").sum())
     w_onde = "em todas as situações" if w_longe == len(CENARIOS) else f"em {w_longe} das {len(CENARIOS)} situações"
 
-    st.markdown(
+    texto = (
         f"Cada barra é a proporção de {REPS:,} conjuntos simulados **sem efeito** (H₀ verdadeira) em que o teste "
         f"deu p < {ALFA:.2f}; o esperado é algo perto de 5% (consideramos \"perto\" até ±1 ponto percentual). "
         f"O **Mann-Whitney** {'ficou perto de 5% em todas as situações' if m_perto else 'se afastou de 5% em alguma situação'} "
@@ -43,3 +42,15 @@ def render():
         "Ser conservador não é \"erro\" grave por si só, mas indica que o Welch está mal calibrado aqui e, como mostra a "
         "seção seguinte, isso vem acompanhado de menos poder."
     )
+
+    with ui.card("tipo1"):
+        st.header("4. Erro tipo I")
+        graf, txt = ui.colunas()
+        with graf:
+            ui.grafico(fig_g3(df, ALFA))
+        with txt:
+            ui.kicker(f"Erro tipo I nas {len(CENARIOS)} situações (esperado: 5%)")
+            ui.duelo(f"{ui.br(w_min, pct=True)} – {ui.br(w_max, pct=True)}",
+                     f"{ui.br(m_min, pct=True)} – {ui.br(m_max, pct=True)}",
+                     "perto de 5%" if w_perto else "conservador", "perto de 5%" if m_perto else "fora de 5% ± 1 p.p.")
+            st.markdown(texto)
