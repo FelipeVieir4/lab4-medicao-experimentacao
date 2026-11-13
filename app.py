@@ -19,8 +19,8 @@ N_SIM = 30          # observações por grupo no conjunto simulado
 REPS_H0 = 10_000    # conjuntos simulados sob H0 para o G2
 
 REPO_URL = "https://github.com/FelipeVieir4/lab4-medicao-experimentacao"
-PROJECTS_URL = "<preencher: link do GitHub Projects>"
-DASHBOARD_URL = "<preencher: link do dashboard publicado>"
+PROJECTS_URL = "https://github.com/FelipeVieir4/lab4-medicao-experimentacao/projects"
+DASHBOARD_URL = "https://lab04medicaoexperimentacao2.streamlit.app/"
 
 
 @st.cache_data

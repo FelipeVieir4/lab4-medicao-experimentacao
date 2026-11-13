@@ -1,8 +1,8 @@
 # Lab04 – Testes de hipótese por dentro
 
-**Dashboard:** `<preencher: link do dashboard publicado>`
+**Dashboard:** https://lab04medicaoexperimentacao2.streamlit.app/
 **Repositório:** https://github.com/FelipeVieir4/lab4-medicao-experimentacao
-**GitHub Projects:** `<preencher>`
+**GitHub Projects:** https://github.com/FelipeVieir4/lab4-medicao-experimentacao/projects
 
 Cenário: o tempo até o merge de PRs difere quando há um bot de revisão? Comparamos **t de Welch × Mann-Whitney**
 por simulação (lognormal com parâmetros estimados de dados reais do supabase/supabase). Detalhes dos dados em
