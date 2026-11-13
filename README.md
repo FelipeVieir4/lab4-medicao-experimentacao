@@ -1,6 +1,6 @@
 # Lab04 – Testes de hipótese por dentro
 
-**Dashboard:** https://lab04medicaoexperimentacao2.streamlit.app/
+**Dashboard:** https://lab04medicaoexperimentacao.streamlit.app/
 **Repositório:** https://github.com/FelipeVieir4/lab4-medicao-experimentacao
 **GitHub Projects:** https://github.com/FelipeVieir4/lab4-medicao-experimentacao/projects
 

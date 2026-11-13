@@ -20,7 +20,7 @@ REPS_H0 = 10_000    # conjuntos simulados sob H0 para o G2
 
 REPO_URL = "https://github.com/FelipeVieir4/lab4-medicao-experimentacao"
 PROJECTS_URL = "https://github.com/FelipeVieir4/lab4-medicao-experimentacao/projects"
-DASHBOARD_URL = "https://lab04medicaoexperimentacao2.streamlit.app/"
+DASHBOARD_URL = "https://lab04medicaoexperimentacao.streamlit.app/"
 
 
 @st.cache_data
