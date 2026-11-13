@@ -94,7 +94,7 @@ a.pill:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(10,132,25
 .kicker { font-size: .8rem; letter-spacing: .01em; color: var(--txt2); font-weight: 600; margin-bottom: .4rem; }
 
 /* Mensagem final em destaque */
-.destaque { position: relative; overflow: hidden; border-radius: 18px; padding: 18px 24px; margin: .2rem 0 1.1rem;
+.destaque { position: relative; overflow: hidden; border-radius: 18px; padding: 18px 24px; margin: 1.1rem 0 1.2rem;
   background: linear-gradient(135deg, rgba(10,132,255,.08), rgba(94,92,230,.08) 55%, rgba(255,159,10,.08));
   box-shadow: 0 0 0 1px rgba(10,132,255,.18); animation: subir .55s var(--ease) both; }
 .destaque .t { font-size: .8rem; font-weight: 600; color: #0A84FF; margin-bottom: .35rem; }

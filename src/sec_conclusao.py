@@ -43,16 +43,6 @@ def render():
     p = lambda teste, d: float(base[(base["teste"] == teste) & (base["d"] == d)]["poder"].iloc[0])
     with ui.card("conclusao"):
         st.header("7. Conclusão")
-        ui.destaque(
-            "Em uma frase",
-            "<b>A escolha do teste importa:</b> com os mesmos dados, um encontrou diferença e o outro não. "
-            "Para escolher, vale olhar a forma dos dados, por histograma e por um teste de normalidade como o "
-            "Shapiro-Wilk, e lembrar da natureza deles: tempos costumam ser assimétricos. "
-            "Nesse caso, o <b>Mann-Whitney</b> é a opção mais segura.",
-            "Shapiro-Wilk nos dados reais: "
-            + ", ".join(f"{g}: p {'< 0,001' if v < 0.001 else '= ' + ui.br(v, 3)}" for g, v in shapiro.items())
-            + " (abaixo de 0,05: os tempos não seguem uma normal).",
-        )
         c1, c2, c3 = st.columns(3, gap="large")
         with c1:
             ui.kicker("O que esperávamos × o que encontramos")
@@ -72,3 +62,13 @@ ou com amostras muito grandes, em que os dois tendem a concordar.""")
             st.markdown("""O estudo é observacional e usa um único repositório com 30 PRs por grupo: PRs com bot podem ser diferentes dos
 sem bot (tamanho, tipo de mudança), então a diferença encontrada não prova que o bot causa a mudança no tempo. Além disso, a simulação assume
 uma lognormal; outras formas de assimetria podem dar resultados diferentes.""")
+        ui.destaque(
+            "Em uma frase",
+            "<b>A escolha do teste importa:</b> com os mesmos dados, um encontrou diferença e o outro não. "
+            "Para escolher, vale olhar a forma dos dados, por histograma e por um teste de normalidade como o "
+            "Shapiro-Wilk, e lembrar da natureza deles: tempos costumam ser assimétricos. "
+            "Nesse caso, o <b>Mann-Whitney</b> é a opção mais segura.",
+            "Shapiro-Wilk nos dados reais: "
+            + ", ".join(f"{g}: p {'< 0,001' if v < 0.001 else '= ' + ui.br(v, 3)}" for g, v in shapiro.items())
+            + " (abaixo de 0,05: os tempos não seguem uma normal).",
+        )
