@@ -50,8 +50,8 @@ def render():
                                      "Tamanho do efeito (d de Cohen / r bisserial)": "{:.2f}"}),
                 hide_index=True, width="stretch",
             )
-            ui.tiles([("Mediana sem bot", CORES_GRUPO["sem_bot"], f"{ui.br(med_sem)} h", "tempo até o merge"),
-                      ("Mediana com bot", CORES_GRUPO["com_bot"], f"{ui.br(med_com)} h", "tempo até o merge")])
+            ui.tiles([("Mediana com bot", CORES_GRUPO["com_bot"], f"{ui.br(med_com)} h", "tempo até o merge"),
+                      ("Mediana sem bot", CORES_GRUPO["sem_bot"], f"{ui.br(med_sem)} h", "tempo até o merge")])
         with txt:
             _texto(w, m, n, mesma, med_com, med_sem)
 

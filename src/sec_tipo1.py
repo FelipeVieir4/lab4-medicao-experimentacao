@@ -9,6 +9,17 @@ from src.scenarios import CENARIOS
 TOLERANCIA = 0.01  # "perto de 5%": até 1 ponto percentual de distância
 
 
+def _rotulo(lo, hi):
+    """Leitura do intervalo de erro tipo I em relação a α."""
+    if lo >= ALFA - TOLERANCIA and hi <= ALFA + TOLERANCIA:
+        return "calibrado: perto de 5%"
+    if hi < ALFA - TOLERANCIA:
+        return "conservador: rejeita menos que 5%"
+    if lo > ALFA + TOLERANCIA:
+        return "liberal: rejeita mais que 5%"
+    return "fora de 5% ± 1 p.p. em alguma situação"
+
+
 @st.cache_data
 def _dados():
     return run_type1()
@@ -49,8 +60,8 @@ def render():
         with graf:
             ui.grafico(fig_g3(df, ALFA))
         with txt:
-            ui.kicker(f"Erro tipo I nas {len(CENARIOS)} situações (esperado: 5%)")
+            ui.kicker(f"Erro tipo I · menor e maior valor nas {len(CENARIOS)} situações (ideal: 5%)")
             ui.duelo(f"{ui.br(w_min, pct=True)} – {ui.br(w_max, pct=True)}",
                      f"{ui.br(m_min, pct=True)} – {ui.br(m_max, pct=True)}",
-                     "perto de 5%" if w_perto else "conservador", "perto de 5%" if m_perto else "fora de 5% ± 1 p.p.")
+                     _rotulo(w_min, w_max), _rotulo(m_min, m_max))
             st.markdown(texto)

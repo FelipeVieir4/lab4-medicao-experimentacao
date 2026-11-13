@@ -1,5 +1,6 @@
 """Seção 7 do dashboard: Conclusão (expectativa × resultado e recomendação)."""
 import streamlit as st
+from scipy import stats
 
 from src import ui
 from src.params import load_real
@@ -25,11 +26,12 @@ def _resumo():
     sem = df.loc[df["grupo"] == "sem_bot", "horas"].to_numpy()
     pw = run_power()
     base = pw[pw["cenario"] == "base"]
-    return welch(com, sem), mannwhitney(com, sem), base
+    shapiro = {"com bot": float(stats.shapiro(com).pvalue), "sem bot": float(stats.shapiro(sem).pvalue)}
+    return welch(com, sem), mannwhitney(com, sem), base, shapiro
 
 
 def render():
-    w, m, base = _resumo()
+    w, m, base, shapiro = _resumo()
     tipo1 = _erro_tipo1()
     if tipo1:
         (wl, wh), (ml, mh) = tipo1["t de Welch"], tipo1["Mann-Whitney"]
@@ -41,6 +43,16 @@ def render():
     p = lambda teste, d: float(base[(base["teste"] == teste) & (base["d"] == d)]["poder"].iloc[0])
     with ui.card("conclusao"):
         st.header("7. Conclusão")
+        ui.destaque(
+            "Em uma frase",
+            "<b>A escolha do teste importa:</b> com os mesmos dados, um encontrou diferença e o outro não. "
+            "Para escolher, vale olhar a forma dos dados, por histograma e por um teste de normalidade como o "
+            "Shapiro-Wilk, e lembrar da natureza deles: tempos costumam ser assimétricos. "
+            "Nesse caso, o <b>Mann-Whitney</b> é a opção mais segura.",
+            "Shapiro-Wilk nos dados reais: "
+            + ", ".join(f"{g}: p {'< 0,001' if v < 0.001 else '= ' + ui.br(v, 3)}" for g, v in shapiro.items())
+            + " (abaixo de 0,05: os tempos não seguem uma normal).",
+        )
         c1, c2, c3 = st.columns(3, gap="large")
         with c1:
             ui.kicker("O que esperávamos × o que encontramos")

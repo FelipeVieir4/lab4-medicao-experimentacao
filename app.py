@@ -83,7 +83,8 @@ with abas[0]:
             )
         with dir_:
             ui.kicker("Dois testes para a mesma pergunta")
-            ui.duelo("médias", "postos", "compara as médias dos grupos", "qual grupo tende a ter valores maiores")
+            ui.duelo("Médias", "Ranking (postos)", "compara a média de horas dos grupos",
+                     "ordena todos os PRs e vê qual grupo fica mais no fim da fila")
             ui.kicker("Dados reais")
             ui.tiles([("Com bot de revisão", CORES_GRUPO["com_bot"], f"{pa['n']} PRs", "mergeados"),
                       ("Sem bot de revisão", CORES_GRUPO["sem_bot"], f"{pb['n']} PRs", "mergeados")])
@@ -105,9 +106,9 @@ with abas[1]:
             ui.grafico(fig_g1(real, sim))
         with txt:
             ui.tiles([("Mediana com bot", CORES_GRUPO["com_bot"], f"{ui.br(np.median(real['com_bot']))} h",
-                       f"média {ui.br(real['com_bot'].mean())} h"),
+                       f"média: {ui.br(real['com_bot'].mean())} h"),
                       ("Mediana sem bot", CORES_GRUPO["sem_bot"], f"{ui.br(np.median(real['sem_bot']))} h",
-                       f"média {ui.br(real['sem_bot'].mean())} h")])
+                       f"média: {ui.br(real['sem_bot'].mean())} h")])
             st.markdown(
                 f"Os dados reais são muito assimétricos: a maioria dos PRs é mergeada em poucas horas, e alguns demoram dias "
                 f"(sem bot: mediana de {np.median(real['sem_bot']):.1f} h, média de {real['sem_bot'].mean():.1f} h; "
@@ -126,6 +127,7 @@ with abas[2]:
         with graf:
             ui.grafico(fig_g2(r["t_null"], r["z_null"], w, m))
         with txt:
+            ui.kicker(f"Exemplo: um conjunto simulado ({N_SIM} PRs por grupo)")
             ui.duelo(f"p = {ui.br(w['p_valor'], 3)}", f"p = {ui.br(m['p_valor'], 4)}",
                      f"t = {ui.br(w['estatistica'], 2)} · {decisao(w['p_valor'])}",
                      f"z = {ui.br(m['estatistica'], 2)} · {decisao(m['p_valor'])}")

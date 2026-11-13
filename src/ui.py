@@ -91,7 +91,15 @@ a.pill:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px rgba(10,132,25
 .tile .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent); }
 .tile .val { font-size: 1.5rem; font-weight: 650; letter-spacing: -.025em; color: var(--txt); margin-top: 4px; }
 .tile .sub { font-size: .76rem; color: var(--txt2); margin-top: 2px; }
-.kicker { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--txt2); font-weight: 600; margin-bottom: .4rem; }
+.kicker { font-size: .8rem; letter-spacing: .01em; color: var(--txt2); font-weight: 600; margin-bottom: .4rem; }
+
+/* Mensagem final em destaque */
+.destaque { position: relative; overflow: hidden; border-radius: 18px; padding: 18px 24px; margin: .2rem 0 1.1rem;
+  background: linear-gradient(135deg, rgba(10,132,255,.08), rgba(94,92,230,.08) 55%, rgba(255,159,10,.08));
+  box-shadow: 0 0 0 1px rgba(10,132,255,.18); animation: subir .55s var(--ease) both; }
+.destaque .t { font-size: .8rem; font-weight: 600; color: #0A84FF; margin-bottom: .35rem; }
+.destaque .f { font-size: 1.12rem; line-height: 1.55; font-weight: 500; color: var(--txt); letter-spacing: -.01em; }
+.destaque .n { font-size: .78rem; color: var(--txt2); margin-top: .5rem; }
 
 [data-testid="stDataFrame"] { border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 1px var(--linha); }
 [data-testid="stPlotlyChart"] { border-radius: 16px; overflow: hidden; }
@@ -143,6 +151,13 @@ def duelo(welch_val: str, mw_val: str, sub_w: str = "", sub_m: str = ""):
     """Welch sempre à esquerda, Mann-Whitney sempre à direita."""
     tiles([("t de Welch", CORES_TESTE["t de Welch"], welch_val, sub_w),
            ("Mann-Whitney", CORES_TESTE["Mann-Whitney"], mw_val, sub_m)])
+
+
+def destaque(titulo: str, frase_html: str, nota: str = ""):
+    """Faixa de destaque com a mensagem principal. frase_html já deve vir escapada (aceita <b>)."""
+    n = f'<div class="n">{escape(nota)}</div>' if nota else ""
+    st.markdown(f'<div class="destaque"><div class="t">{escape(titulo)}</div><div class="f">{frase_html}</div>{n}</div>',
+                unsafe_allow_html=True)
 
 
 def pills(links):

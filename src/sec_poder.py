@@ -27,12 +27,12 @@ def render():
         with graf:
             ui.grafico(fig_g4(df, ALFA))
         with txt:
-            ui.kicker("Poder no cenário base (d = 0,5)")
+            ui.kicker("Poder no cenário base · efeito moderado (d = 0,5; PR com bot ~2,6× mais lento)")
             ui.duelo(ui.br(w_base, 0, pct=True), ui.br(mw_base, 0, pct=True),
-                     f"{ui.br(w_max, 0, pct=True)} com d = 1,5", f"{ui.br(mw_max, 0, pct=True)} com d = 1,5")
+                     f"com efeito máximo (d = 1,5): {ui.br(w_max, 0, pct=True)}", f"com efeito máximo (d = 1,5): {ui.br(mw_max, 0, pct=True)}")
             st.markdown(
                 f"Cada ponto é a proporção de {REPS:,} conjuntos simulados em que o teste rejeitou H₀ (α = {ALFA:.2f}); "
-                "d = 0 é o caso sem efeito, e as linhas tracejadas marcam 5% e 80%. "
+                "d = 0 é o caso sem efeito; a linha vermelha marca o erro permitido (5%) e a cinza, o poder considerado adequado (80%). "
                 f"Com dados lognormais, o **Mann-Whitney detecta melhor o efeito em todas as situações**: com d = 0,5 no cenário base, "
                 f"ele rejeita {mw_base:.0%} das vezes contra {w_base:.0%} do Welch. "
                 f"A vantagem não muda de lado, só de tamanho: o Welch chega a apenas {w_max:.0%} com d = 1,5 no cenário base, enquanto o Mann-Whitney chega a {mw_max:.0%}. "
