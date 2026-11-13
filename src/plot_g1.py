@@ -2,7 +2,8 @@
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-CORES_GRUPO = {"com_bot": "#2a9d8f", "sem_bot": "#8d6e63"}
+from src.theme import ALTURA, CORES_GRUPO
+
 ROTULOS = {"com_bot": "Com bot de revisão", "sem_bot": "Sem bot de revisão"}
 
 
@@ -29,6 +30,6 @@ def fig_g1(real, simulado, bin_size=10, x_max=250):
     fig.update_yaxes(title_text="Nº de PRs", col=1)
     fig.update_layout(
         title="G1 – Tempo até o merge: dados reais × simulados (lognormal)",
-        legend_title_text="Grupo", height=520, bargap=0.05,
+        legend_title_text="Grupo", height=ALTURA, bargap=0.08,
     )
     return fig
